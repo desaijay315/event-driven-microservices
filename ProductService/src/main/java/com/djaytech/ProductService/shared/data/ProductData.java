@@ -15,5 +15,10 @@ public class ProductData {
     private String name;
     private BigDecimal price;
     private Integer quantity;
+    private boolean deleted;
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 }
 

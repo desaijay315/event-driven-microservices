@@ -1,7 +1,9 @@
 package com.djaytech.ProductService.command.api.aggregate;
 
 import com.djaytech.ProductService.command.api.commands.CreateProductCommand;
+import com.djaytech.ProductService.command.api.commands.DeleteProductCommand;
 import com.djaytech.ProductService.command.api.events.ProductCreatedEvent;
+import com.djaytech.ProductService.command.api.events.ProductDeletedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -18,6 +20,7 @@ public class ProductAggregate {
     private String name;
     private BigDecimal price;
     private Integer quantity;
+    private boolean deleted;
 
     @CommandHandler
     public ProductAggregate(CreateProductCommand createProductCommand){
@@ -30,6 +33,15 @@ public class ProductAggregate {
         AggregateLifecycle.apply(productCreatedEvent);
     }
 
+    // Command Handler for DeleteProductCommand
+    @CommandHandler
+    public void handle(DeleteProductCommand deleteProductCommand) {
+        // Perform any required validations
+
+        ProductDeletedEvent productDeletedEvent = new ProductDeletedEvent(deleteProductCommand.getProductId());
+        AggregateLifecycle.apply(productDeletedEvent);
+    }
+
     public ProductAggregate(){
 
     }
@@ -40,5 +52,10 @@ public class ProductAggregate {
         this.productId = productCreatedEvent.getProductId();
         this.price = productCreatedEvent.getPrice();
         this.name = productCreatedEvent.getName();
+    }
+
+    @EventSourcingHandler
+    public void on(ProductDeletedEvent productDeletedEvent) {
+        this.deleted = true;
     }
  }
