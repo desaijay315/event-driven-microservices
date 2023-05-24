@@ -1,7 +1,7 @@
 package com.djaytech.ProductService.command.api.controller;
 
 import com.djaytech.ProductService.command.api.commands.CreateProductCommand;
-import com.djaytech.ProductService.command.api.model.Product;
+import com.djaytech.ProductService.shared.model.Product;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

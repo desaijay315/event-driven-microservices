@@ -1,7 +1,7 @@
 package com.djaytech.ProductService.command.api.events;
 
-import com.djaytech.ProductService.command.api.data.Product;
-import com.djaytech.ProductService.command.api.data.ProductRepository;
+import com.djaytech.ProductService.shared.data.ProductData;
+import com.djaytech.ProductService.shared.data.ProductRepository;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class ProductEventsHandler {
 
     @EventHandler
     public void on(ProductCreatedEvent event){
-        Product product = new Product();
+        ProductData product = new ProductData();
 
         BeanUtils.copyProperties(event, product);
         productRepository.save(product);

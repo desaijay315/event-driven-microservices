@@ -1,4 +1,4 @@
-package com.djaytech.ProductService.command.api.model;
+package com.djaytech.ProductService.shared.model;
 
 import lombok.Builder;
 import lombok.Data;
