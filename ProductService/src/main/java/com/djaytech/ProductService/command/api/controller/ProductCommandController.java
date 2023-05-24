@@ -2,6 +2,7 @@ package com.djaytech.ProductService.command.api.controller;
 
 import com.djaytech.ProductService.command.api.commands.CreateProductCommand;
 import com.djaytech.ProductService.command.api.commands.DeleteProductCommand;
+import com.djaytech.ProductService.command.api.commands.UpdateProductCommand;
 import com.djaytech.ProductService.shared.model.Product;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,17 @@ public class ProductCommandController {
                 .productId(productId)
                 .build();
         commandGateway.sendAndWait(deleteProductCommand);
+    }
+
+    @PutMapping("/{productId}")
+    public void updateProduct(@PathVariable String productId, @RequestBody Product product) {
+        UpdateProductCommand updateProductCommand = UpdateProductCommand.builder()
+                .productId(productId)
+                .name(product.getName())
+                .price(product.getPrice())
+                .quantity(product.getQuantity())
+                .build();
+        commandGateway.sendAndWait(updateProductCommand);
     }
 
 }

@@ -2,8 +2,10 @@ package com.djaytech.ProductService.command.api.aggregate;
 
 import com.djaytech.ProductService.command.api.commands.CreateProductCommand;
 import com.djaytech.ProductService.command.api.commands.DeleteProductCommand;
+import com.djaytech.ProductService.command.api.commands.UpdateProductCommand;
 import com.djaytech.ProductService.command.api.events.ProductCreatedEvent;
 import com.djaytech.ProductService.command.api.events.ProductDeletedEvent;
+import com.djaytech.ProductService.command.api.events.ProductUpdatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -42,6 +44,23 @@ public class ProductAggregate {
         AggregateLifecycle.apply(productDeletedEvent);
     }
 
+    @CommandHandler
+    public void handle(UpdateProductCommand updateProductCommand) {
+        // Perform any required validations
+
+        if (deleted) {
+            throw new IllegalStateException("Cannot update a deleted product");
+        }
+
+        ProductUpdatedEvent productUpdatedEvent = new ProductUpdatedEvent(
+                updateProductCommand.getProductId(),
+                updateProductCommand.getName(),
+                updateProductCommand.getPrice(),
+                updateProductCommand.getQuantity()
+        );
+        AggregateLifecycle.apply(productUpdatedEvent);
+    }
+
     public ProductAggregate(){
 
     }
@@ -57,5 +76,12 @@ public class ProductAggregate {
     @EventSourcingHandler
     public void on(ProductDeletedEvent productDeletedEvent) {
         this.deleted = true;
+    }
+
+    @EventSourcingHandler
+    public void on(ProductUpdatedEvent productUpdatedEvent) {
+        this.name = productUpdatedEvent.getName();
+        this.price = productUpdatedEvent.getPrice();
+        this.quantity = productUpdatedEvent.getQuantity();
     }
  }
