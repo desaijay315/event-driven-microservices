@@ -1,4 +1,4 @@
-package com.djaytech.ProductService.shared.model;
+package com.djaytech.ProductService.core.model;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

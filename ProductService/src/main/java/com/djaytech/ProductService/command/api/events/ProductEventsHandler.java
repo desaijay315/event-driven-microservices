@@ -1,9 +1,8 @@
 package com.djaytech.ProductService.command.api.events;
 
-import com.djaytech.ProductService.shared.data.ProductData;
-import com.djaytech.ProductService.shared.data.ProductRepository;
+import com.djaytech.ProductService.core.data.ProductData;
+import com.djaytech.ProductService.core.data.ProductRepository;
 import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

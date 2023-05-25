@@ -3,9 +3,9 @@ package com.djaytech.ProductService.query.api.projection;
 import com.djaytech.ProductService.query.api.queries.GetProductByIdQuery;
 import com.djaytech.ProductService.query.api.queries.GetProductsByRangeQuery;
 import com.djaytech.ProductService.query.api.queries.GetProductsQuery;
-import com.djaytech.ProductService.shared.model.Product;
-import com.djaytech.ProductService.shared.data.ProductData;
-import com.djaytech.ProductService.shared.data.ProductRepository;
+import com.djaytech.ProductService.core.model.Product;
+import com.djaytech.ProductService.core.data.ProductData;
+import com.djaytech.ProductService.core.data.ProductRepository;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 

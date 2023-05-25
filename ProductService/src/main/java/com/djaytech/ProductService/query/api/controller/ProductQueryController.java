@@ -3,7 +3,7 @@ package com.djaytech.ProductService.query.api.controller;
 import com.djaytech.ProductService.query.api.queries.GetProductByIdQuery;
 import com.djaytech.ProductService.query.api.queries.GetProductsByRangeQuery;
 import com.djaytech.ProductService.query.api.queries.GetProductsQuery;
-import com.djaytech.ProductService.shared.model.Product;
+import com.djaytech.ProductService.core.model.Product;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.web.bind.annotation.*;

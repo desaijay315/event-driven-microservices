@@ -3,7 +3,7 @@ package com.djaytech.ProductService.command.api.controller;
 import com.djaytech.ProductService.command.api.commands.CreateProductCommand;
 import com.djaytech.ProductService.command.api.commands.DeleteProductCommand;
 import com.djaytech.ProductService.command.api.commands.UpdateProductCommand;
-import com.djaytech.ProductService.shared.model.Product;
+import com.djaytech.ProductService.core.model.Product;
 import jakarta.validation.Valid;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;

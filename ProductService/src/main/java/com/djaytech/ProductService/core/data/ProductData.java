@@ -1,4 +1,4 @@
-package com.djaytech.ProductService.shared.data;
+package com.djaytech.ProductService.core.data;
 
         import jakarta.persistence.Entity;
         import jakarta.persistence.Id;

@@ -6,6 +6,10 @@ import com.djaytech.ProductService.command.api.commands.UpdateProductCommand;
 import com.djaytech.ProductService.command.api.events.ProductCreatedEvent;
 import com.djaytech.ProductService.command.api.events.ProductDeletedEvent;
 import com.djaytech.ProductService.command.api.events.ProductUpdatedEvent;
+import com.djaytech.ProductService.exception.DeletedProductException;
+import com.djaytech.ProductService.exception.EmptyProductNameException;
+import com.djaytech.ProductService.exception.InvalidPriceException;
+import com.djaytech.ProductService.exception.IsDeletedProductException;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -29,12 +33,12 @@ public class ProductAggregate {
         //adding few validations
 
         if(createProductCommand.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Price cannot be less or equal than zero");
+            throw new InvalidPriceException();
         }
 
         if(createProductCommand.getName() == null
                 || createProductCommand.getName().isBlank()) {
-            throw new IllegalArgumentException("Product name cannot be empty");
+            throw new EmptyProductNameException();
         }
 
         ProductCreatedEvent productCreatedEvent =
@@ -49,7 +53,7 @@ public class ProductAggregate {
     @CommandHandler
     public void handle(DeleteProductCommand deleteProductCommand) {
         // Perform any required validations
-
+        
         ProductDeletedEvent productDeletedEvent = new ProductDeletedEvent(deleteProductCommand.getProductId());
         AggregateLifecycle.apply(productDeletedEvent);
     }
@@ -59,7 +63,7 @@ public class ProductAggregate {
         // Perform any required validations
 
         if (deleted) {
-            throw new IllegalStateException("Cannot update a deleted product");
+            throw new DeletedProductException();
         }
 
         ProductUpdatedEvent productUpdatedEvent = new ProductUpdatedEvent(
