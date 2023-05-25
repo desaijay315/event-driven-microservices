@@ -4,6 +4,7 @@ import com.djaytech.ProductService.command.api.commands.CreateProductCommand;
 import com.djaytech.ProductService.command.api.commands.DeleteProductCommand;
 import com.djaytech.ProductService.command.api.commands.UpdateProductCommand;
 import com.djaytech.ProductService.shared.model.Product;
+import jakarta.validation.Valid;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ProductCommandController {
     @Autowired
     private CommandGateway commandGateway;
     @PostMapping
-    public String  addProduct(@RequestBody Product product){
+    public String  addProduct(@Valid @RequestBody Product product){
         CreateProductCommand createProductCommand = CreateProductCommand.builder()
                 .productId(UUID.randomUUID().toString())
                 .name(product.getName())

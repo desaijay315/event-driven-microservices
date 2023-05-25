@@ -26,7 +26,17 @@ public class ProductAggregate {
 
     @CommandHandler
     public ProductAggregate(CreateProductCommand createProductCommand){
-        //you can perform all the validations here
+        //adding few validations
+
+        if(createProductCommand.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Price cannot be less or equal than zero");
+        }
+
+        if(createProductCommand.getName() == null
+                || createProductCommand.getName().isBlank()) {
+            throw new IllegalArgumentException("Product name cannot be empty");
+        }
+
         ProductCreatedEvent productCreatedEvent =
                 new ProductCreatedEvent();
 
