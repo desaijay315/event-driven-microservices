@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class ErrorResponse {
-    private String errorMessage;
+    private Map<String, String> errorMessage;
     private String errorCode;
 }

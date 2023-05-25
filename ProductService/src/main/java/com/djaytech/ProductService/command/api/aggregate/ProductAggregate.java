@@ -53,7 +53,7 @@ public class ProductAggregate {
     @CommandHandler
     public void handle(DeleteProductCommand deleteProductCommand) {
         // Perform any required validations
-        
+
         ProductDeletedEvent productDeletedEvent = new ProductDeletedEvent(deleteProductCommand.getProductId());
         AggregateLifecycle.apply(productDeletedEvent);
     }
