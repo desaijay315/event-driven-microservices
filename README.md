@@ -170,3 +170,71 @@ The `ProductEventsHandler` class represents an event handler for the `ProductCre
 - The `@EventHandler` annotation indicates that the `on()` method handles the `ProductCreatedEvent`.
 - Inside the event handler, a new `Product` object is created and its properties are copied from the event using `BeanUtils.copyProperties()`.
 - The product is then saved to the database using the `productRepository.save()` method.
+
+
+### `CustomExceptionHandler` class:
+
+```java
+package com.djaytech.ProductService.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@ControllerAdvice
+public class CustomExceptionHandler {
+```
+- This code declares a class named `CustomExceptionHandler` in the package `com.djaytech.ProductService.exception`. It is annotated with `@ControllerAdvice`, indicating that it provides centralized exception handling for the controllers in the application.
+
+```java
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        BindingResult bindingResult = ex.getBindingResult();
+        Map<String, String> errorMessage = new HashMap<>();
+
+        bindingResult.getFieldErrors().forEach(fieldError ->
+                errorMessage.put(fieldError.getField(), fieldError.getDefaultMessage())
+        );
+```
+- This method handles exceptions of type `MethodArgumentNotValidException`, which occurs when validation fails for a request parameter or request body object. It takes the exception `ex` as a parameter.
+- The method obtains the `BindingResult` from the exception to retrieve information about the validation errors.
+- It creates a `Map<String, String>` named `errorMessage` to store the field names and their corresponding error messages.
+- Using `bindingResult.getFieldErrors().forEach`, it iterates over the field errors and populates the `errorMessage` map with field names as keys and error messages as values.
+
+```java
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorMessage(errorMessage)
+                .errorCode("VALIDATION_ERROR")
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+```
+- This code constructs an `ErrorResponse` object using a builder pattern.
+- The `errorMessage` field of the `ErrorResponse` is set to the `errorMessage` map obtained from the validation errors.
+- The `errorCode` field is set to `"VALIDATION_ERROR"`.
+- Finally, a `ResponseEntity` is created with the `errorResponse` object and an HTTP status of `BAD_REQUEST`, indicating a client error. The response entity is returned.
+
+```java
+    @ExceptionHandler(DeletedProductException.class)
+    public ResponseEntity<ErrorResponse> handleDeletedProductException(DeletedProductException ex) {
+        Map<String, String> errorMessage = new HashMap<>();
+        errorMessage.put("error", ex.getMessage());
+
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setErrorMessage(errorMessage);
+        errorResponse.setErrorCode("DELETED_PRODUCT_ERROR");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+```
+- This method handles exceptions of type `DeletedProductException`, which represents an exception specific to deleted products. It takes the exception `ex` as a parameter.
+- It creates a `Map<String, String>` named `errorMessage` and puts the error message from the exception into it.
+- An `ErrorResponse` object is created, and its `errorMessage` field is set to the `errorMessage` map, and `errorCode` is set to `"DELETED_PRODUCT_ERROR"`.
+- A `ResponseEntity` is created with the `errorResponse` object and an HTTP status of `BAD_REQUEST`, indicating a client error. The response entity is returned.
