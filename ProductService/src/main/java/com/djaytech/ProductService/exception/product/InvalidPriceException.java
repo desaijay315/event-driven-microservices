@@ -1,4 +1,4 @@
-package com.djaytech.ProductService.exception;
+package com.djaytech.ProductService.exception.product;
 
 public class InvalidPriceException extends IllegalArgumentException {
     public InvalidPriceException() {

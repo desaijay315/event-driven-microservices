@@ -1,5 +1,9 @@
 package com.djaytech.ProductService.exception;
 
+import com.djaytech.ProductService.exception.product.DeletedProductException;
+import com.djaytech.ProductService.exception.product.EmptyProductNameException;
+import com.djaytech.ProductService.exception.product.InvalidPriceException;
+import com.djaytech.ProductService.exception.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

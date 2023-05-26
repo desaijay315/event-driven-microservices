@@ -25,7 +25,14 @@ public class ProductCommandController {
                 .price(product.getPrice())
                 .quantity(product.getQuantity())
                 .build();
-        return commandGateway.sendAndWait(createProductCommand);
+
+        String responseValue;
+        try{
+            responseValue = commandGateway.sendAndWait(createProductCommand);
+        }catch(Exception ex){
+            responseValue = ex.getLocalizedMessage();
+        }
+        return responseValue;
     }
 
     @DeleteMapping("/{productId}")
@@ -34,6 +41,13 @@ public class ProductCommandController {
                 .productId(productId)
                 .build();
         commandGateway.sendAndWait(deleteProductCommand);
+
+        String responseValue;
+        try{
+            responseValue = commandGateway.sendAndWait(deleteProductCommand);
+        }catch(Exception ex){
+            responseValue = ex.getLocalizedMessage();
+        }
     }
 
     @PutMapping("/{productId}")

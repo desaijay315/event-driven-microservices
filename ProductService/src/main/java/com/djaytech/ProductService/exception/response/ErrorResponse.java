@@ -1,4 +1,4 @@
-package com.djaytech.ProductService.exception;
+package com.djaytech.ProductService.exception.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
