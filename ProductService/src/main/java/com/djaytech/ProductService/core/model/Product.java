@@ -15,7 +15,7 @@ public class Product {
     @NotBlank(message="Product name is a required field")
     private String name;
 
-    //@Min(value=1, message="Price cannot be lower than 1")
+    @Min(value=1, message="Price cannot be less or equal than zero")
     private BigDecimal price;
 
     @Min(value=1, message="Quantity cannot be lower than 1")

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/product")
 public class ProductQueryController {
 
     private QueryGateway queryGateway;
@@ -21,7 +21,7 @@ public class ProductQueryController {
         this.queryGateway = queryGateway;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Product> getAllProducts() {
         GetProductsQuery getProductsQuery =
                 new GetProductsQuery();

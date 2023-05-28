@@ -26,7 +26,7 @@ public class CreateProductCommandInterceptor implements MessageDispatchIntercept
             if(CreateProductCommand.class.equals(command.getPayloadType())){
                 CreateProductCommand createProductCommand = (CreateProductCommand) command.getPayload();
                 if(createProductCommand.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Price cannot be less or equal than zero");
+                    throw new InvalidPriceException();
                 }
 
                 if(createProductCommand.getName() == null

@@ -28,7 +28,7 @@ public class ProductAggregate {
     private boolean deleted;
 
     @CommandHandler
-    public ProductAggregate(CreateProductCommand createProductCommand){
+    public ProductAggregate(CreateProductCommand createProductCommand) throws Exception{
         //adding few validations
 
         if(createProductCommand.getPrice().compareTo(BigDecimal.ZERO) <= 0) {

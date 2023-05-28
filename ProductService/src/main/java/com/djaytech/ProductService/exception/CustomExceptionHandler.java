@@ -4,12 +4,15 @@ import com.djaytech.ProductService.exception.product.DeletedProductException;
 import com.djaytech.ProductService.exception.product.EmptyProductNameException;
 import com.djaytech.ProductService.exception.product.InvalidPriceException;
 import com.djaytech.ProductService.exception.response.ErrorResponse;
+import org.axonframework.commandhandling.CommandExecutionException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,6 +75,18 @@ public class CustomExceptionHandler {
         errorResponse.setErrorCode("EMPTY_PRODUCT_NAME_ERROR");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(value= {CommandExecutionException.class})
+    public ResponseEntity<Object> handleCommandExecutionException(CommandExecutionException ex, WebRequest request) {
+        Map<String, String> errorMessage = new HashMap<>();
+        errorMessage.put("error", ex.getMessage());
+
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setErrorMessage(errorMessage);
+        errorResponse.setErrorCode("COMMAND_EXECUTION_ERROR");
+
+        return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
