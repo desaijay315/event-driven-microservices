@@ -1,17 +1,8 @@
-axon:
-  eventhandling:
-    processors:
-      product-group:
-        mode: subscribing
-server:
-  error:
-    include-binding-errors: always
-    include-message: always
 spring:
   datasource:
     driverClassName: org.h2.Driver
     password: password
-    url: jdbc:h2:file:~/data/productDB
+    url: jdbc:h2:file:~/data/orderDB
     username: sa
   h2:
     console:
@@ -23,6 +14,6 @@ spring:
     hibernate:
       ddl-auto: update
   application:
-    name: product-service
+    name: order-service
   config:
-    import: configserver:http://localhost:8088
+    import: "configserver:http://localhost:8088"
